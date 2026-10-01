@@ -42,6 +42,10 @@ export function downloadCsv(name: string, csv: string) {
   const link = document.createElement('a')
   link.href = url
   link.download = name
+  // Safari and Firefox only honor the click if the link is in the document,
+  // and drop the download if the URL is revoked before they have read it.
+  document.body.append(link)
   link.click()
-  URL.revokeObjectURL(url)
+  link.remove()
+  setTimeout(() => URL.revokeObjectURL(url), 60_000)
 }

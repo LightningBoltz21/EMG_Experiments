@@ -40,7 +40,10 @@ Web Serial needs HTTPS, which Vercel provides.
 
 1. Enter a participant ID and press **Connect Wristband**. Pick the J-Link port in the browser's dialog.
 2. The DK exposes more than one serial port. If the app reports no signal, press **Choose Another Port** and pick the other one.
-3. Press **Begin**, then **Start** at the top of each block. The CSV downloads when Block 3 ends.
+3. Press **Begin**, then **Start** at the top of each block. Recording runs from **Begin** to the end of the session.
+4. When Block 3 ends the CSV downloads automatically. The final screen also has a **Download CSV** button, in case the browser blocked the automatic download.
+
+The top-right corner shows the wristband's status on every screen: not connected, connecting, connected, no signal, or demo mode. "Connected" means samples are arriving, not just that the port is open.
 
 | Block | What the participant does | Length |
 | --- | --- | --- |
@@ -54,7 +57,7 @@ Timings and the cue count are in `src/lib/protocol.ts`.
 
 - A block skipped before it starts has no rows in the CSV.
 - A block skipped part-way keeps the rows recorded so far, so it has fewer trials than the table above and its last trial may be cut short. The filename does not mark this; check the trial counts per block when loading.
-- If all three blocks are skipped before any starts, nothing is saved and the app returns to the first screen.
+- If all three blocks are skipped before any starts, the file still downloads but every row is `Block` 0, so it holds nothing usable.
 
 If the cable is pulled or the signal stops mid-session, the run ends and the partial recording can be downloaded (`_partial` in the filename).
 
@@ -67,7 +70,7 @@ One file per session: `emg_<participant>_<YYYYMMDD_HHMMSS>.csv`.
 | `Voltage_mV` | Raw sample from the firmware, unfiltered |
 | `Count` | Sample index from 0, in arrival order |
 | `Time_s` | Seconds since recording started, stamped when the sample's batch arrived. Samples in one batch share a value |
-| `Block` | 1 to 3. **0 marks samples captured on a between-block screen; drop these before training** |
+| `Block` | 1 to 3. **0 marks samples captured while a block's intro screen was showing; drop these before training** |
 | `Trial` | Squeeze number within the block, from 1. 0 during rest |
 | `Target_Level` | Instructed level: 0 for rest, 1 to 5 for a squeeze. Block 1's maximum squeezes are 5 |
 

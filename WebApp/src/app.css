@@ -12,9 +12,8 @@
   --on-accent: #000000;
   --danger: #ff453a;
 
-  --title-font: 'Playfair Display Variable', Georgia, serif;
-
-  font-family: 'Inter Variable', system-ui, sans-serif;
+  /* San Francisco on Apple devices; it cannot be shipped as a web font, so other systems get their own UI font. */
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, 'Helvetica Neue', sans-serif;
   font-size: 17px;
   -webkit-font-smoothing: antialiased;
 }

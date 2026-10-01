@@ -37,6 +37,15 @@
   let connectedAt = 0
   let lastSampleAt = 0
 
+  // The always-visible indicator in the top-right corner.
+  const link = $derived.by(() => {
+    if (demo) return { text: 'Demo mode', tone: 'ok' }
+    if (!connected) return { text: 'Wristband not connected', tone: 'off' }
+    if (hasSignal) return { text: 'Wristband connected', tone: 'ok' }
+    if (noSignal) return { text: 'No signal', tone: 'bad' }
+    return { text: 'Connecting…', tone: 'off' }
+  })
+
   const id = $derived(safeId(participant))
   const block = $derived(blocks[blockIndex])
   const eyebrow = $derived(block ? `${demo ? 'Demo · ' : ''}Block ${block.id} of ${blocks.length}` : '')
@@ -106,19 +115,20 @@
     begin()
   }
 
+  // Recording runs from here to the end of the session, so there is always a
+  // file to download, even if blocks are skipped. Rows outside a running
+  // block are labeled Block 0.
   function begin() {
     blocks = buildBlocks()
     blockIndex = 0
+    recorder = new Recorder()
+    recordStart = performance.now()
+    startedAt = new Date()
     screen = 'intro'
   }
 
   function startBlock() {
     blockStart = now = performance.now()
-    if (!recorder) {
-      recorder = new Recorder()
-      recordStart = blockStart
-      startedAt = new Date()
-    }
     screen = 'running'
   }
 
@@ -128,12 +138,9 @@
     if (blockIndex < blocks.length - 1) {
       blockIndex += 1
       screen = 'intro'
-    } else if (recorder) {
+    } else {
       save(false)
       screen = 'done'
-    } else {
-      // Every block was skipped before any started, so there is nothing to save.
-      void reset()
     }
   }
 
@@ -186,6 +193,8 @@
   })
 </script>
 
+<p class="link {link.tone}" role="status">{link.text}</p>
+
 <main class="card">
   {#if screen === 'setup'}
     <div class="body">
@@ -197,21 +206,13 @@
           <input bind:value={participant} placeholder="P01" autocomplete="off" spellcheck="false" />
         </label>
       {/if}
-      <p class="status" class:ok={hasSignal} class:bad={!supported || noSignal || !!connectError} role="status">
-        {#if !supported}
-          This browser can't connect to the wristband. Use desktop Chrome or Edge.
-        {:else if connectError}
-          {connectError}
-        {:else if !connected}
-          Wristband not connected
-        {:else if hasSignal}
-          Receiving signal
-        {:else if noSignal}
-          No signal on this port. The board has more than one, so try another.
-        {:else}
-          Waiting for signal…
-        {/if}
-      </p>
+      {#if !supported}
+        <p class="status bad">This browser can't connect to the wristband. Use desktop Chrome or Edge.</p>
+      {:else if connectError}
+        <p class="status bad">{connectError}</p>
+      {:else if noSignal}
+        <p class="status bad">No signal on this port. The board has more than one, so try another.</p>
+      {/if}
     </div>
     <div class="actions">
       {#if !supported}
@@ -275,13 +276,13 @@
     <button class="plain quiet" onclick={endBlock}>Skip Block</button>
   {:else if screen === 'done' && saved}
     <div class="body">
-      <h1>{demo ? 'Demo Complete' : 'Recording Saved'}</h1>
+      <h1>{demo ? 'Demo Complete' : 'Session Complete'}</h1>
       <p>{demo ? 'This file holds mock data, not a real recording.' : 'Thank you. You can relax your hand.'}</p>
       <p class="file">{saved.name}</p>
     </div>
     <div class="actions">
-      <button class="primary" onclick={reset}>{demo ? 'Exit Demo' : 'New Participant'}</button>
-      <button class="plain" onclick={download}>Download Again</button>
+      <button class="primary" onclick={download}>Download CSV</button>
+      <button class="plain" onclick={reset}>{demo ? 'Exit Demo' : 'New Participant'}</button>
     </div>
   {:else if screen === 'failed'}
     <div class="body">
@@ -292,10 +293,10 @@
       {/if}
     </div>
     <div class="actions">
-      <button class="primary" onclick={reset}>Start Over</button>
       {#if saved}
-        <button class="plain" onclick={download}>Download Partial Recording</button>
+        <button class="primary" onclick={download}>Download Partial Recording</button>
       {/if}
+      <button class="plain" onclick={reset}>Start Over</button>
     </div>
   {/if}
 </main>
@@ -324,7 +325,6 @@
 
   h1 {
     margin: 0;
-    font-family: var(--title-font);
     font-size: 36px;
     font-weight: 700;
     letter-spacing: -0.01em;
@@ -394,7 +394,20 @@
     font-size: 15px;
   }
 
-  .status::before {
+  .link {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--card);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .status::before,
+  .link::before {
     content: '';
     display: inline-block;
     width: 8px;
@@ -404,15 +417,17 @@
     background: var(--tertiary);
   }
 
-  .status.ok::before {
+  .link.ok::before {
     background: var(--accent);
   }
 
-  .status.bad {
+  .status.bad,
+  .link.bad {
     color: var(--danger);
   }
 
-  .status.bad::before {
+  .status.bad::before,
+  .link.bad::before {
     background: var(--danger);
   }
 
