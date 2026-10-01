@@ -1,0 +1,7 @@
+default: Firmware
+build_dir: /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build
+domains:
+  - name: Firmware
+    build_dir: /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/Firmware
+flash_order:
+  - Firmware

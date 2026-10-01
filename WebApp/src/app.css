@@ -1,0 +1,39 @@
+:root {
+  /* Always dark, whatever the system setting, so every participant sees the same stimulus. */
+  color-scheme: dark;
+
+  --bg: #000000;
+  --card: #1c1c1e;
+  --fill: #2c2c2e;
+  --text: #ffffff;
+  --secondary: #98989d;
+  --tertiary: #636366;
+  --accent: #a6ff00;
+  --on-accent: #000000;
+  --danger: #ff453a;
+
+  --title-font: 'Playfair Display Variable', Georgia, serif;
+
+  font-family: 'Inter Variable', system-ui, sans-serif;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+#app {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 16px;
+}

@@ -1,0 +1,59 @@
+cmake:
+  application:
+    configuration-dir: /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware
+    source-dir: /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware
+  board:
+    name: nrf5340dk
+    path:
+     - /home/bhrz/ncs/v3.0.0/zephyr/boards/nordic/nrf5340dk
+    qualifiers: nrf5340/cpuapp
+    revision: 
+  devicetree:
+    bindings-dirs:
+     - /home/bhrz/ncs/v3.0.0/nrf/dts/bindings
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/bindings
+    extra-user-files:
+     - nrf5340dk_nrf5340_cpuapp.overlay
+    files:
+     - /home/bhrz/ncs/v3.0.0/zephyr/boards/nordic/nrf5340dk/nrf5340dk_nrf5340_cpuapp.dts
+     - nrf5340dk_nrf5340_cpuapp.overlay
+     - nrf5340dk_nrf5340_cpuapp.overlay
+    include-dirs:
+     - /home/bhrz/ncs/v3.0.0/nrf/include
+     - /home/bhrz/ncs/v3.0.0/nrf/dts/common
+     - /home/bhrz/ncs/v3.0.0/nrf/dts/riscv
+     - /home/bhrz/ncs/v3.0.0/nrf/dts/arm
+     - /home/bhrz/ncs/v3.0.0/nrf/dts
+     - /home/bhrz/ncs/v3.0.0/zephyr/include
+     - /home/bhrz/ncs/v3.0.0/zephyr/include/zephyr
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/common
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/x86
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/xtensa
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/sparc
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/riscv
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/posix
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/nios2
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/arm64
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/arm
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts/arc
+     - /home/bhrz/ncs/v3.0.0/zephyr/dts
+    user-files:
+     - nrf5340dk_nrf5340_cpuapp.overlay
+  kconfig:
+    files:
+     - /home/bhrz/ncs/v3.0.0/zephyr/boards/nordic/nrf5340dk/nrf5340dk_nrf5340_cpuapp_defconfig
+     - /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/prj.conf
+     - /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/Firmware/zephyr/misc/generated/extra_kconfig_options.conf
+     - /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/Firmware/zephyr/.config.sysbuild
+    user-files:
+     - prj.conf
+  toolchain:
+    name: zephyr
+    path: /home/bhrz/ncs/toolchains/7cbc0036f4/opt/zephyr-sdk
+  vendor-specific:
+    nordic:
+      svdfile: /home/bhrz/ncs/v3.0.0/modules/hal/nordic/nrfx/mdk/nrf5340_application.svd
+  zephyr:
+    version: 4.0.99
+    zephyr-base: /home/bhrz/ncs/v3.0.0/zephyr
+version: 0.1.0

@@ -1,0 +1,24 @@
+{
+  "toolchainPath": "/home/bhrz/ncs/toolchains/7cbc0036f4",
+  "sdkPath": "/home/bhrz/ncs/v3.0.0",
+  "board": "nrf5340dk/nrf5340/cpuapp",
+  "boardDir": "/home/bhrz/ncs/v3.0.0/zephyr/boards/nordic/nrf5340dk",
+  "boardDirs": [
+    "/home/bhrz/ncs/v3.0.0/zephyr/boards/nordic/nrf5340dk"
+  ],
+  "sysbuild": true,
+  "optimizations": "default",
+  "cmakeArgs": [],
+  "confFiles": [
+    "prj.conf"
+  ],
+  "buildDirectory": "build",
+  "kconfigFragments": [],
+  "snippets": [],
+  "dtcOverlays": [
+    "nrf5340dk_nrf5340_cpuapp.overlay"
+  ],
+  "extraDtcOverlays": [
+    "nrf5340dk_nrf5340_cpuapp.overlay"
+  ]
+}

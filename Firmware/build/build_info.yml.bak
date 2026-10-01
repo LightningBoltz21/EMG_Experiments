@@ -1,0 +1,22 @@
+cmake:
+  board:
+    name: nrf5340dk
+    path:
+     - /home/bhrz/ncs/v3.0.0/zephyr/boards/nordic/nrf5340dk
+    qualifiers: nrf5340/cpuapp
+    revision: 
+  images:
+   - name: Firmware
+     source-dir: /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware
+     type: MAIN
+  kconfig:
+    files:
+     - /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/empty.conf
+     - /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/empty.conf
+    user-files:
+     - /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/empty.conf
+version: 0.1.0
+west:
+  command: /home/bhrz/ncs/toolchains/7cbc0036f4/usr/local/bin/west build --build-dir /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build /home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware --pristine --board nrf5340dk/nrf5340/cpuapp --sysbuild -- -DCONFIG_DEBUG_THREAD_INFO=y -DCONF_FILE=prj.conf -DDTC_OVERLAY_FILE=nrf5340dk_nrf5340_cpuapp.overlay -DEXTRA_DTC_OVERLAY_FILE=nrf5340dk_nrf5340_cpuapp.overlay
+  topdir: /home/bhrz/ncs/v3.0.0
+  version: 1.2.0

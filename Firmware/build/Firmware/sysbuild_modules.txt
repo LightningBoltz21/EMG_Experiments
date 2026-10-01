@@ -1,0 +1,2 @@
+"nrf":"/home/bhrz/ncs/v3.0.0/nrf":"/home/bhrz/ncs/v3.0.0/nrf/sysbuild"
+"mcuboot":"/home/bhrz/ncs/v3.0.0/bootloader/mcuboot":"/home/bhrz/ncs/v3.0.0/bootloader/mcuboot/boot/zephyr/sysbuild"

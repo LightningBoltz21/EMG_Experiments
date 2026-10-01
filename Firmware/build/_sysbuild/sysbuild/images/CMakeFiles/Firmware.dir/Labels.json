@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/CMakeFiles/Firmware"
+		},
+		{
+			"file" : "/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/CMakeFiles/Firmware.rule"
+		},
+		{
+			"file" : "/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/CMakeFiles/Firmware-complete.rule"
+		},
+		{
+			"file" : "/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-build.rule"
+		},
+		{
+			"file" : "/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-configure.rule"
+		},
+		{
+			"file" : "/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-download.rule"
+		},
+		{
+			"file" : "/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-install.rule"
+		},
+		{
+			"file" : "/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-mkdir.rule"
+		},
+		{
+			"file" : "/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-patch.rule"
+		},
+		{
+			"file" : "/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"Firmware"
+		],
+		"name" : "Firmware"
+	}
+}

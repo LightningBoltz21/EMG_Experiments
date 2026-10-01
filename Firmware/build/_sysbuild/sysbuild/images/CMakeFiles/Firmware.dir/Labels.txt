@@ -1,0 +1,13 @@
+# Target labels
+ Firmware
+# Source files and their labels
+/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/CMakeFiles/Firmware
+/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/CMakeFiles/Firmware.rule
+/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/CMakeFiles/Firmware-complete.rule
+/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-build.rule
+/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-configure.rule
+/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-download.rule
+/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-install.rule
+/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-mkdir.rule
+/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-patch.rule
+/home/bhrz/Documents/Classes/Flavin_Lab/Github/Firmware/build/_sysbuild/sysbuild/images/Firmware-prefix/src/Firmware-stamp/Firmware-update.rule
