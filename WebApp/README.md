@@ -26,7 +26,7 @@ Under `npm run dev`, adding `?speed=10` to the URL runs the session clock ten ti
 
 **Try Demo** on the first screen runs the full session without a wristband, on mock data. It works in any browser, including ones without Web Serial.
 
-- The mock signal is noise around a fixed offset. It does not respond to the cues, so a demo file is useless for training.
+- The mock signal is noise around a fixed offset that gets louder with the cued level, so the live plot visibly reacts. It is not a model of EMG, and a demo file is useless for training.
 - Every screen is marked "Demo" and the file is named `emg_demo_<YYYYMMDD_HHMMSS>.csv`. Keep these out of the training set.
 
 ## Deploy to Vercel
@@ -60,6 +60,21 @@ Timings and the cue count are in `src/lib/protocol.ts`.
 - If all three blocks are skipped before any starts, the file still downloads but every row is `Block` 0, so it holds nothing usable.
 
 If the cable is pulled or the signal stops mid-session, the run ends and the partial recording can be downloaded (`_partial` in the filename).
+
+## Live plot
+
+While a block is running, the screen shows the electrode signal under the cue. It follows the plot in `../Firmware/monitor_visualization_scripts/filtered_plotter.py`:
+
+- The latest 500 samples (1 second), redrawn as new samples arrive.
+- The whole window is zero-phase filtered on every redraw with the same 20–200 Hz, 4th-order Butterworth bandpass. `src/lib/filter.ts` is a port of SciPy's `sosfiltfilt`, and its test checks the output against values printed from SciPy.
+- Like the Python plot, the two ends of the trace wobble slightly between redraws. That is the filter being re-run on a moving window, not the signal.
+
+Two differences from the Python tool:
+
+- The vertical axis starts at ±2 mV, not ±20 mV. The Python plotter has a Scale box to compensate; this app has no controls, and filtered squeezes in the existing recordings peak near 1.3 mV. The axis widens if the signal exceeds it and never narrows again during a session.
+- The filter is for display only. The CSV holds the raw samples.
+
+The bandpass coefficients in `filter.ts` are fixed numbers for 500 Hz. If the sample rate or band changes, regenerate them with the SciPy call given in that file.
 
 ## CSV format
 

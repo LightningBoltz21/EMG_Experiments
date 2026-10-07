@@ -3,6 +3,7 @@
   import { buildBlocks, segmentAt, type Block } from './lib/protocol'
   import { Recorder, downloadCsv, fileName, safeId } from './lib/recorder'
   import { createDemoSource } from './lib/demo'
+  import { EmgPlotter } from './lib/plotter'
   import { openSerialSource, serialSupported, type SampleSource } from './lib/serial'
 
   // Dev-only: ?speed=10 runs the session clock fast.
@@ -29,6 +30,10 @@
   let blockIndex = $state(0)
   let blockStart = $state(0)
   let now = $state(0)
+
+  // Fed from the moment a source is attached, so the trace is already full of
+  // real samples when a block starts.
+  const plotter = new EmgPlotter()
 
   let source: SampleSource | null = null
   let recorder: Recorder | null = null
@@ -64,6 +69,7 @@
   function onSamples(mv: number[]) {
     const t = performance.now()
     lastSampleAt = t
+    plotter.updatePlot(mv)
     if (!recorder) return
     const active = screen === 'running' ? segmentAt(block.segments, (t - blockStart) * speed) : null
     recorder.add(mv, (t - recordStart) / 1000, active ? block.id : 0, active?.trial ?? 0, active?.target ?? 0)
@@ -111,7 +117,7 @@
     await detach()
     connectError = ''
     demo = true
-    attach(createDemoSource())
+    attach(createDemoSource(() => segment?.target ?? 0))
     begin()
   }
 
@@ -270,6 +276,10 @@
         Almost done
       {/if}
     </p>
+    <figure class="plot">
+      <canvas use:plotter.attach aria-label="Live filtered EMG signal"></canvas>
+      <figcaption><span>Voltage (mV)</span><span>Sample</span></figcaption>
+    </figure>
     <div class="progress" aria-hidden="true">
       <div style:width="{(elapsed / block.durationMs) * 100}%"></div>
     </div>
@@ -484,7 +494,7 @@
     position: relative;
     width: 280px;
     height: 280px;
-    margin-block: auto 0;
+    margin-block: 20px 0;
   }
 
   svg {
@@ -548,8 +558,28 @@
   }
 
   .hint {
-    margin-block: 28px auto;
+    margin-block: 24px;
     font-size: 20px;
+    font-weight: 600;
+  }
+
+  .plot {
+    width: 100%;
+    margin: 0 0 20px;
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: 120px;
+  }
+
+  figcaption {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 34px;
+    color: var(--tertiary);
+    font-size: 11px;
     font-weight: 600;
   }
 
