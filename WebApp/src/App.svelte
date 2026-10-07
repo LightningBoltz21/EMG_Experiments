@@ -14,7 +14,7 @@
   const RING_RADIUS = 128
   const RING_LENGTH = 2 * Math.PI * RING_RADIUS
 
-  type Screen = 'setup' | 'intro' | 'running' | 'done' | 'failed'
+  type Screen = 'setup' | 'test' | 'intro' | 'running' | 'done' | 'failed'
   type Saved = { name: string; csv: string; rows: number }
 
   let screen = $state<Screen>('setup')
@@ -79,6 +79,7 @@
     source = null
     connected = false
     if (recorder) fail('The wristband was disconnected.')
+    else if (screen === 'test') screen = 'setup'
   }
 
   function attach(next: SampleSource) {
@@ -109,6 +110,12 @@
   async function chooseAnotherPort() {
     await detach()
     await connect()
+  }
+
+  // Just the live plot, for checking electrode contact. Nothing is recorded.
+  async function testSignal() {
+    if (!connected) await connect()
+    if (connected) screen = 'test'
   }
 
   // Runs the whole session on mock data. The file is named as a demo so it
@@ -225,13 +232,29 @@
         <button class="primary" onclick={startDemo}>Try Demo</button>
       {:else if !connected}
         <button class="primary" onclick={connect}>Connect Wristband</button>
-        <button class="plain" onclick={startDemo}>Try Demo</button>
+        <div class="row">
+          <button class="plain" onclick={testSignal}>Test Signal</button>
+          <button class="plain" onclick={startDemo}>Try Demo</button>
+        </div>
       {:else if noSignal}
         <button class="primary" onclick={chooseAnotherPort}>Choose Another Port</button>
         <button class="plain" onclick={startDemo}>Try Demo</button>
       {:else}
         <button class="primary" disabled={!hasSignal || !id} onclick={begin}>Begin</button>
+        <button class="plain" onclick={testSignal}>Test Signal</button>
       {/if}
+    </div>
+  {:else if screen === 'test'}
+    <div class="body">
+      <p class="eyebrow">Not recording</p>
+      <h1>Signal Test</h1>
+      <figure class="plot tall">
+        <canvas use:plotter.attach aria-label="Live filtered EMG signal"></canvas>
+        <figcaption><span>Voltage (mV)</span><span>Sample</span></figcaption>
+      </figure>
+    </div>
+    <div class="actions">
+      <button class="primary" onclick={() => (screen = 'setup')}>Done</button>
     </div>
   {:else if screen === 'intro'}
     <div class="body">
@@ -572,6 +595,22 @@
     display: block;
     width: 100%;
     height: 120px;
+  }
+
+  .tall {
+    margin-top: 16px;
+  }
+
+  .tall canvas {
+    height: 280px;
+  }
+
+  .row {
+    display: flex;
+  }
+
+  .row button {
+    flex: 1;
   }
 
   figcaption {

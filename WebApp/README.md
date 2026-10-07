@@ -69,6 +69,8 @@ While a block is running, the screen shows the electrode signal under the cue. I
 - The whole window is zero-phase filtered on every redraw with the same 20–200 Hz, 4th-order Butterworth bandpass. `src/lib/filter.ts` is a port of SciPy's `sosfiltfilt`, and its test checks the output against values printed from SciPy.
 - Like the Python plot, the two ends of the trace wobble slightly between redraws. That is the filter being re-run on a moving window, not the signal.
 
+**Test Signal** on the first screen opens the same plot on its own, larger, for checking electrode contact before a session. It connects the wristband first if needed, needs no participant ID, and records nothing. **Done** returns to the first screen with the wristband still connected. It needs a real wristband, so it is not offered in browsers without Web Serial.
+
 Two differences from the Python tool:
 
 - The vertical axis starts at ±2 mV, not ±20 mV. The Python plotter has a Scale box to compensate; this app has no controls, and filtered squeezes in the existing recordings peak near 1.3 mV. The axis widens if the signal exceeds it and never narrows again during a session.
